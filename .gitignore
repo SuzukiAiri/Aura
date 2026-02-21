@@ -1,0 +1,52 @@
+.env
+data/
+__pycache__/
+*.pyc
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.DS_Store
+
+# build artifacts
+build/
+dist/
+
+
+# 忽略环境变量和机密信息
+.env
+.env.*
+
+# 忽略 Python 虚拟环境
+venv/
+env/
+.venv/
+
+# 忽略 Python 缓存文件
+__pycache__/
+*.py[cod]
+*$py.class
+
+# 忽略本地日志文件（如架构中提到的持续记录文件）
+daily_log.json
+memcells.json
+event_stream.json
+conversations.json
+*.log
+
+# 忽略系统文件
+.DS_Store
+*.weights
+*.pt
+*.h5
+Agents.md
+*.jpg
+# 忽略模型配置文件
+*.cfg
+
+# 忽略特定的白名单文件夹（注意最后的斜杠，代表忽略整个文件夹）
+whitelist/Yuechuan/
+
+# 忽略本地生成的媒体测试文件和数据库
+*.mp3
+*.mp4
+*.db

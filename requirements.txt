@@ -1,0 +1,19 @@
+opencv-python
+requests
+numpy <2
+pillow
+pyttsx3
+openai
+boto3
+deepface
+tf-keras
+google-genai
+sounddevice
+soundfile
+openai-whisper
+kokoro-onnx
+edge-tts
+fastapi
+uvicorn[standard]
+websockets
+python-dotenv

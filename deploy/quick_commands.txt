@@ -1,0 +1,51 @@
+# Aura quick commands (Ubuntu 22.04)
+# Assumes project is uploaded to /opt/aura
+
+# 1) Enter project and run bootstrap script
+cd /opt/aura
+bash deploy/setup_server.sh
+
+# 2) Create and edit environment file
+cp .env.example .env
+vim .env
+
+# 3) Install systemd unit
+sudo cp /opt/aura/deploy/aura.service /etc/systemd/system/aura.service
+sudo vim /etc/systemd/system/aura.service
+# Replace placeholders:
+#   <USER> -> your Linux username
+#   <PROJECT_DIR> -> /opt/aura
+
+# 4) Verify and start Aura service
+sudo cat /etc/systemd/system/aura.service
+sudo systemctl daemon-reload
+sudo systemctl enable --now aura
+sudo systemctl status aura --no-pager
+
+# 5) Install Caddy config
+sudo cp /opt/aura/deploy/Caddyfile /etc/caddy/Caddyfile
+sudo vim /etc/caddy/Caddyfile
+# Optional: replace :80 with your domain
+
+# 6) Verify and reload Caddy
+sudo cat /etc/caddy/Caddyfile
+sudo systemctl reload caddy
+sudo systemctl status caddy --no-pager
+
+# 7) Health check
+curl http://127.0.0.1:8000/healthz
+
+# 8) Session creation check
+curl -X POST http://127.0.0.1:8000/api/v1/session/start \
+  -H "Content-Type: application/json" \
+  -d '{"user_id":"smoke-test"}'
+
+# 9) Tail logs
+sudo journalctl -u aura -f
+
+# 10) Common restarts
+sudo systemctl restart aura
+sudo systemctl restart caddy
+
+# 11) Optional tmux auto-attach
+# Follow deploy/tmux_hook.txt and append to ~/.bashrc

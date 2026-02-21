@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Aura Remote Console</title>
+  <link rel="stylesheet" href="/web/styles.css" />
+</head>
+<body>
+  <main class="container">
+    <section class="panel">
+      <h1>Aura Remote Console</h1>
+      <div class="row">
+        <label for="userId">User ID</label>
+        <input id="userId" value="demo-user" />
+      </div>
+      <div class="actions">
+        <button id="btnStart">Start Session</button>
+        <button id="btnEndTurn" disabled>End Turn</button>
+        <button id="btnStop" disabled>Stop</button>
+      </div>
+      <div class="status">
+        <span>State:</span>
+        <strong id="stateValue">disconnected</strong>
+      </div>
+      <p id="hint">请先点击 Start Session 并允许摄像头/麦克风权限。</p>
+    </section>
+
+    <section class="panel">
+      <h2>Camera Preview</h2>
+      <video id="preview" autoplay muted playsinline></video>
+    </section>
+
+    <section class="panel">
+      <h2>Emotion</h2>
+      <pre id="emotionBox">-</pre>
+    </section>
+
+    <section class="panel">
+      <h2>Transcript</h2>
+      <pre id="transcript"></pre>
+    </section>
+  </main>
+  <script src="/web/app.js"></script>
+</body>
+</html>

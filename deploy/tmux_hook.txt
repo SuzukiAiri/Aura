@@ -1,0 +1,13 @@
+将以下代码片段追加到服务器用户的 `~/.bashrc`。追加前请先将 `<PROJECT_DIR>` 替换为 Aura 项目绝对路径。
+
+```bash
+# Aura Auto-Attach Tmux Logic
+# 请在添加到 .bashrc 前，将 <PROJECT_DIR> 替换为项目的实际绝对路径
+if [[ $- =~ i ]]; then
+    tmux new-session -A -s aura_console -d
+    tmux send-keys -t aura_console:0 'journalctl -u aura.service -f' C-m
+    tmux split-window -h -t aura_console:0
+    tmux send-keys -t aura_console:0.1 'cd <PROJECT_DIR> && source venv/bin/activate' C-m
+    exec tmux attach-session -t aura_console
+fi
+```

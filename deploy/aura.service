@@ -1,0 +1,14 @@
+﻿[Unit]
+Description=Aura FastAPI Application Service
+After=network.target
+
+[Service]
+# 璇峰皢 <USER> 鏇挎崲涓烘偍鐨?Linux 鐢ㄦ埛鍚嶏紙闈?root锛?User=<USER>
+# 璇峰皢 <PROJECT_DIR> 鏇挎崲涓烘偍鏈嶅姟鍣ㄤ笂鐨?Aura 椤圭洰缁濆璺緞
+WorkingDirectory=<PROJECT_DIR>
+EnvironmentFile=<PROJECT_DIR>/.env
+ExecStart=<PROJECT_DIR>/venv/bin/gunicorn server.app:app --workers 2 --worker-class uvicorn.workers.UvicornWorker --bind 127.0.0.1:8000
+Restart=always
+
+[Install]
+WantedBy=multi-user.target

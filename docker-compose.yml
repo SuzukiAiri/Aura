@@ -1,0 +1,46 @@
+version: "3.9"
+
+services:
+  aura-api:
+    build: .
+    container_name: aura-api
+    restart: unless-stopped
+    env_file:
+      - .env
+    environment:
+      - AURA_DATA_DIR=/app/data
+      - AURA_WHITELIST_DIR=/app/whitelist
+      - AURA_YOLO_DIR=/app/yolo
+    volumes:
+      - ./data:/app/data
+      - ./whitelist:/app/whitelist:ro
+      - ./yolo:/app/yolo:ro
+    expose:
+      - "8000"
+    healthcheck:
+      test: ["CMD", "curl", "-fsS", "http://localhost:8000/healthz"]
+      interval: 20s
+      timeout: 5s
+      retries: 5
+      start_period: 20s
+
+  caddy:
+    image: caddy:2
+    container_name: aura-caddy
+    restart: unless-stopped
+    depends_on:
+      aura-api:
+        condition: service_healthy
+    ports:
+      - "80:80"
+      - "443:443"
+    env_file:
+      - .env
+    volumes:
+      - ./deploy/Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy_data:/data
+      - caddy_config:/config
+
+volumes:
+  caddy_data:
+  caddy_config:
